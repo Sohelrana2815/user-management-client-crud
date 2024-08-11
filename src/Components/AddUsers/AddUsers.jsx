@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 const AddUsers = () => {
   const handleAddUser = (e) => {
     e.preventDefault();
@@ -8,14 +9,36 @@ const AddUsers = () => {
     const gender = form.gender.value;
     const newUser = { name, email, password, gender };
     console.log(newUser);
+
+    // send data to the server
+
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "User Added Successfully",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+        }
+      });
   };
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center min-h-screen">
         <form
           onSubmit={handleAddUser}
-          className="lg:w-3/12 mx-auto border lg:p-6 rounded-lg bg-gray-50"
+          className="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-3/12 mx-auto border p-4 sm:p-6 rounded-lg bg-gray-50"
         >
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700">
