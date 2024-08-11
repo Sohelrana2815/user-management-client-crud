@@ -3,7 +3,9 @@ import Swal from "sweetalert2";
 
 const UpdateUser = () => {
   const user = useLoaderData();
-  const { name, email, password, gender, _id } = user;
+  // console.log(user);
+
+  const { name, email, password, _id, gender } = user;
   const handleUpdateUser = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -49,6 +51,7 @@ const UpdateUser = () => {
             </label>
             <input
               type="text"
+              name="name"
               defaultValue={name}
               className="mt-1 block w-full p-2 border rounded-md"
               required
@@ -60,6 +63,7 @@ const UpdateUser = () => {
             </label>
             <input
               type="email"
+              name="email"
               defaultValue={email}
               className="mt-1 block w-full p-2 border rounded-md"
               required
@@ -71,6 +75,7 @@ const UpdateUser = () => {
             </label>
             <input
               type="password"
+              name="password"
               defaultValue={password}
               className="mt-1 block w-full p-2 border rounded-md"
               required
@@ -85,6 +90,7 @@ const UpdateUser = () => {
                   name="gender"
                   value="Male"
                   className="form-radio"
+                  defaultChecked={gender === "Male"}
                   required
                 />
                 <span className="ml-2">Male</span>
@@ -95,6 +101,7 @@ const UpdateUser = () => {
                   name="gender"
                   value="Female"
                   className="form-radio"
+                  defaultChecked={gender === "Female"}
                   required
                 />
                 <span className="ml-2">Female</span>
@@ -103,7 +110,7 @@ const UpdateUser = () => {
           </div>
           <input
             type="submit"
-            value="Create user"
+            value="Update user"
             className="bg-blue-500 btn text-white"
           />
         </form>

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { FaPen, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -55,6 +56,12 @@ const UsersTable = ({ user, index, users, setUsers }) => {
       </tr>
     </>
   );
+};
+UsersTable.propTypes = {
+  user: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired,
+  setUsers: PropTypes.func.isRequired,
 };
 
 export default UsersTable;
