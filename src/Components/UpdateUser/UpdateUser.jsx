@@ -1,31 +1,34 @@
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-const AddUsers = () => {
-  const handleAddUser = (e) => {
+
+const UpdateUser = () => {
+  const user = useLoaderData();
+  const { name, email, password, gender, _id } = user;
+  const handleUpdateUser = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
     const gender = form.gender.value;
-    const newUser = { name, email, password, gender };
-    console.log(newUser);
+    const updatedUser = { name, email, password, gender };
+    console.log(updatedUser);
 
     // send data to the server
-
-    fetch("http://localhost:5000/users", {
-      method: "POST",
+    fetch(`http://localhost:5000/users/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newUser),
+      body: JSON.stringify(updatedUser),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertedId) {
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
-            text: "User Added Successfully",
+            text: "User Updated Successfully",
             icon: "success",
             confirmButtonText: "Cool",
           });
@@ -37,7 +40,7 @@ const AddUsers = () => {
     <>
       <div className="flex items-center justify-center min-h-screen">
         <form
-          onSubmit={handleAddUser}
+          onSubmit={handleUpdateUser}
           className="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-2/5 mx-auto border p-4 sm:p-6 rounded-lg bg-gray-50"
         >
           <div className="mb-4">
@@ -46,7 +49,7 @@ const AddUsers = () => {
             </label>
             <input
               type="text"
-              name="name"
+              defaultValue={name}
               className="mt-1 block w-full p-2 border rounded-md"
               required
             />
@@ -57,7 +60,7 @@ const AddUsers = () => {
             </label>
             <input
               type="email"
-              name="email"
+              defaultValue={email}
               className="mt-1 block w-full p-2 border rounded-md"
               required
             />
@@ -68,7 +71,7 @@ const AddUsers = () => {
             </label>
             <input
               type="password"
-              name="password"
+              defaultValue={password}
               className="mt-1 block w-full p-2 border rounded-md"
               required
             />
@@ -109,4 +112,4 @@ const AddUsers = () => {
   );
 };
 
-export default AddUsers;
+export default UpdateUser;
